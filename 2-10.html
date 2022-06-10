@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hello vue.js</title>
+
+  <style>
+    #list {width: 400px; border: 1px solid black; border-collapse: collapse;}
+    #list td, #list th {border: 1px solid black; text-align: center;}
+    #list > thead > tr {color: yellow; background-color: purple;}
+    .divider { height: 2px; background-color: gray; }
+  </style>
+
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="example">
+  <table id="list">
+    <thead>
+    <tr>
+      <th>번호</th>
+      <th>이름</th>
+      <th>전화번호</th>
+      <th>주소</th>
+    </tr>
+    </thead>
+
+    <tbody id="contacts">
+
+    <template v-for="(contact, index) in contacts">
+      <tr>
+        <td>{{contact.no}}</td>
+        <td>{{contact.name}}</td>
+        <td>{{contact.tel}}</td>
+        <td>{{contact.address}}</td>
+      </tr>
+
+<!--      <tr class="divider" v-if="index % 5 === 4">-->
+      <tr class="divider">
+        <td colspan="4"></td>
+      </tr>
+
+    </template>
+
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+
+  var model = {
+    "pageno" : 1,
+    "pagesize" : 10,
+    "totalcount" : 100,
+    "contacts" : [
+      {"no": 100, "name": "집에", "tel": "010-2956-9623", "address": "서울"},
+      {"no": 99, "name": "가고", "tel": "010-1111-2222", "address": "경기"},
+      {"no": 98, "name": "싶다", "tel": "010-4444-3333", "address": "부산"},
+      {"no": 97, "name": "잠좀", "tel": "010-5555-6666", "address": "광주"},
+      {"no": 96, "name": "자고", "tel": "010-7777-8888", "address": "대전"},
+      {"no": 95, "name": "싶다", "tel": "010-2956-8888", "address": "울산"},
+      {"no": 94, "name": "누워", "tel": "010-8888-9623", "address": "충북"},
+      {"no": 93, "name": "있고", "tel": "010-2956-2222", "address": "충남"},
+      {"no": 92, "name": "싶다", "tel": "010-2956-3333", "address": "전북"},
+      {"no": 91, "name": "퇴근", "tel": "010-4444-9623", "address": "전남"},
+    ]
+  }
+
+  var list = new Vue({
+    el : '#example',
+    data : model
+  })
+
+</script>
+</body>
+</html>

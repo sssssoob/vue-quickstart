@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hello vue.js</title>
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+<div id="example">
+
+  <span v-once>{{message}}</span>
+
+</div>
+
+<script type="text/javascript">
+
+  var model = {
+    message : '첫번째 vue js 앱입니다.'
+  };
+
+  var simple = new Vue({
+    el : '#example',
+    data : model
+  })
+
+
+</script>
+</body>
+</html>
