@@ -14,7 +14,7 @@
 <div id="example">
 
     <p>
-        국가명 : <input type="text" placeholder="국가명" />
+        국가명 : <input type="text" v-model="countryname" placeholder="국가명" @input="nameChanged"/>
     </p>
 
     <table id="list">
@@ -28,7 +28,12 @@
         </thead>
 
         <tbody id="contacts">
-
+            <tr v-for="c in filtered">
+                <td>{{c.no}}</td>
+                <td>{{c.name}}</td>
+                <td>{{c.capital}}</td>
+                <td>{{c.region}}</td>
+            </tr>
         </tbody>
     </table>
 
@@ -62,7 +67,19 @@
         el : "#example",
         data : model,
         computed : {
-
+            filtered: function() {
+                var cname = this.countryname.trim();
+                return this.countries.filter(function(item, index){
+                    if(item.name.indexOf(cname) > -1){
+                        return true;
+                    }
+                })
+            }
+        },
+        methods : {
+            nameChanged : function(e){
+                this.countryname  = e.target.value;
+            }
         }
     })
 
