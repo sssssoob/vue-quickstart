@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+<div id="example">
+
+    <input type="text" v-model="num" /> <br />
+    1부터 입력된 수까지의 합 : <span>{{sum}}</span>
+
+</div>
+
+<script type="text/javascript">
+
+    var vmSum = new Vue({
+        el : '#example',
+        data : {num : 0},
+        computed : {
+            sum : function() {
+                var n = Number(this.num);
+
+                if (Number.isNaN(n) || n < 1) return 0;
+                return ((1+n) * n) / 2;
+            }
+        }
+    });
+
+
+    /*
+
+    -  computed 옵션  -
+    computed 옵션에서 지정한 값은 함수지만 vue 인스턴스는 프록시 처리하여 마치 속성처럼 취급한다.
+    computed 옵션의 sum은 함수인데, vmSum.sum으로 속성 접근 방식을 사용하면 정상 실행된다.
+    이러한 이유로 계산형 속성이라고 부르는 것
+
+    계산형 속성은 읽기전용이라 생각하기 쉽지만 set 메서드를 지정하면 쓰기 작업도 가능하다.
+    자바의 getter,setter와 비슷한 개념  -> 예제 3-3 참고
+
+    */
+
+
+</script>
+</body>
+</html>
