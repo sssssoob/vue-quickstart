@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+<div id="example">
+
+    x : <input type="text" v-model="x"> <br>
+    y : <input type="text" v-model="y"> <br>
+
+    result : {{sum}}
+
+</div>
+
+<script type="text/javascript">
+
+    var vmSum = new Vue({
+        el : '#example',
+        data : {x: 0, y: 0},
+        computed : {
+            sum : function () {
+                console.log("## x 변경")
+                var result = Number(this.x) + Number(this.y);
+
+                if(isNaN(result)) return 0;
+                else return result;
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>
