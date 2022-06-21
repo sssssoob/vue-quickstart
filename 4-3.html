@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <style>
+        html, body { margin: 0; padding: 0}
+    </style>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+<div id="example" v-on:contextmenu="ctxStop">
+
+    <a href="https://google.com" @click="confirmG">구글</a>
+
+</div>
+
+<script type="text/javascript">
+
+    var vm = new Vue({
+        el : '#example',
+        methods : {
+            ctxStop : function (e) {
+                e.preventDefault();
+            },
+            confirmG : function (e) {
+                if(!confirm("구글로 이동할까요?")) {
+                    e.preventDefault();
+                }
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
