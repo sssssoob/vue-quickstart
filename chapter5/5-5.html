@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>5-5</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        .set1 { background-color: aqua; color: purple; }
+        .set2 { text-align: center; width: 120px; }
+        .set3 { border: sandybrown dashed 1px; }
+    </style>
+</head>
+<body>
+<div id="example">
+    <button id="btn1" v-bind:class="mystyle">테스트</button>
+    <p>
+        <input type="checkbox" v-model="mystyle.set1" value="true">set1 디자인</input>
+        <input type="checkbox" v-model="mystyle.set2" value="true">set2 디자인</input>
+        <input type="checkbox" v-model="mystyle.set3" value="true">set2 디자인</input>
+    </p>
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el : "#example",
+        data : {
+            mystyle : {s1: false, s2: false, s3: false }
+        }
+    })
+</script>
+
+</body>
+</html>

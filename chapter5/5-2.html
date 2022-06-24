@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5-2</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+<div id="example">
+    <div :style="{backgroundColor: a.bc, border: a.bd, width: a.w+'px', height: a.h+'px' }" @mouseover.stop="overEvent" @mouseout.stop="outEvent">테스트</div>
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el : "#example",
+        data : {
+            a : {
+                bc: 'aqua',
+                bd: 'solid 1px gray',
+                w: 200,
+                h : 100
+            }
+        },
+        methods : {
+            overEvent : function (e) {
+                this.style1.backgroundColor = 'purple';
+                this.style1.color = 'yellow';
+            },
+            outEvent : function (e) {
+                this.style1.backgroundColor = 'aqua';
+                this.style1.color = 'black';
+            }
+        },
+    })
+</script>
+
+</body>
+</html>
