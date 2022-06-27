@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6-5</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<script type="text/javascript">
+    Vue.component('option-component', {
+        template: '<option>hello</option>'
+    })
+
+    var vm = new Vue({
+        el : '#app'
+    })
+</script>
+
+<script type="text/x-handlebars-template" id="selectTempalate">
+    <select>
+        <option-component></option-component>
+        <option-component></option-component>
+        <option-component></option-component>
+        <option-component></option-component>
+    </select>
+</script>
+
+<script type="text/javascript">
+    Vue.component('select-component', {
+        template: '#selectTempalate'
+    })
+</script>
+
+<body>
+<div id="app">
+    <select-component></select-component>
+</div>
+</body>
+
+
+
+<script type="text/javascript">
+    Vue.config.devtools = true;
+    var v = new Vue({
+        el: '#app'
+    })
+</script>
+
+</html>

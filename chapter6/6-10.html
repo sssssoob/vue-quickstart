@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6-10</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<style>
+    #list  { width: 600px; border:1px solid black; border-collapse:collapse; }
+    #list td, #list th { border:1px solid black;  text-align:center; }
+    #list > thead > tr { color:yellow; background-color: purple; }
+</style>
+
+<template id="listTemplate">
+    <div>
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+
+            <tbody id="contacts">
+                <tr v-for="contact in contacts">
+                    <td>{{contact.no}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<script type="text/javascript">
+    Vue.component('contactlist-component', {
+        template : '#listTemplate',
+        props : [ 'contacts' ]
+    })
+</script>
+
+<body>
+    <div id="app">
+        <h1>에방 접종</h1>
+        <hr />
+        <h3>1차 대상자</h3>
+        <contactlist-component :contacts="list1"></contactlist-component>
+        <h3>2차 대상자</h3>
+        <contactlist-component :contacts="list2"></contactlist-component>
+    </div>
+</body>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el : '#app',
+        data : {
+            list1 : [
+                {"no": 97, "name": "kalisa rogers", "tel": "010-2000-1000", "address": "서울시"},
+                {"no": 96, "name": "jesse james", "tel": "010-3000-1000", "address": "서울시"},
+                {"no": 95, "name": "jenifer walker", "tel": "010-4000-1000", "address": "서울시"},
+            ],
+            list2 : [
+                {"no": 82, "name": "zenon howard", "tel": "010-2000-2000", "address": "서울시"},
+                {"no": 81, "name": "kylie allen", "tel": "010-2000-3000", "address": "서울시"},
+            ]
+        }
+    })
+</script>
+
+</html>

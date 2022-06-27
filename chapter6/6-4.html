@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>6-4</title>
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<script type="text/javascript">
+  //인라인 템플릿 (권장하지 않음)
+  Vue.component('option-component', {
+    template: '<option>hello</option>'
+  })
+
+  var vm = new Vue({
+    el : '#app'
+  })
+</script>
+
+<body>
+  <div id="app">
+    <select>
+      <option is="option-component"></option>
+      <option is="option-component"></option>
+      <option is="option-component"></option>
+    </select>
+  </div>
+</body>
+
+<script type="text/javascript">
+  Vue.config.devtools = true;
+  var v = new Vue({
+    el: '#app'
+  })
+</script>
+
+</html>

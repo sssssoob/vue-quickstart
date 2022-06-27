@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6-7</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<template id="listTemplate">
+    <li>{{message}}</li>
+</template>
+
+<script type="text/javascript">
+    Vue.component('list-component', {
+        template : '#listTemplate',
+        props : ['message']
+    })
+</script>
+
+<body>
+    <div id="app">
+        <ul>
+            <list-component message="hello"></list-component>
+            <list-component message="신짜오"></list-component>
+            <list-component message="니하오"></list-component>
+        </ul>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    var v = new Vue ({
+        el : "#app"
+    })
+</script>
+
+</html>
