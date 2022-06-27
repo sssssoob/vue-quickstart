@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Todo List</title>
-    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+    <meta charset="utf-8">
+    <title>05-12</title>
     <style>
         * {  box-sizing: border-box;  }
         ul {  margin: 0; padding: 0; }
@@ -48,34 +47,63 @@
         }
         .addbutton:hover { background-color: #bbb; }
         .completed { text-decoration:none; }
-
     </style>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
 </head>
 <body>
-    <div id="todolistapp">
-        <div id="header" class="header">
-            <h2>Todo List APP</h2>
-            <input class="input" type="text" id="task" placeholder="입력 후 엔터!">
-            <span class="addbutton"> 추 가 </span>
-        </div>
+<div id="todolistapp">
+    <div id="header" class="header">
+        <h2>Todo List App</h2>
+        <input class="input" type="text" id="task" v-model.trim="todo"
+               placeholder="입력 후 엔터!" v-on:keyup.enter="addTodo">
+        <span class="addbutton" v-on:click="addTodo">추 가</span>
     </div>
-
     <ul id="todolist">
-        <li>
-            <span>Task 1</span>
-            <span class="close">&#x00D7</span>
-        </li>
-
-        <li class="checked">
-            <span>Task 2</span>
-            <span>(완료)</span>
-            <span class="close">&#x00D7</span>
-        </li>
-
-        <li>
-            <span>Task 3</span>
-            <span class="close">&#x00D7</span>
+        <li v-for="a in todolist" v-bind:class="checked(a.done)"
+            v-on:click="doneToggle(a.id)">
+            <span>{{ a.todo }}</span>
+            <span v-if="a.done"> (완료)</span>
+            <span class="close" v-on:click.stop="deleteTodo(a.id)">&#x00D7;</span>
         </li>
     </ul>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el : "#todolistapp",
+        data : {
+            todo : "",
+            todolist : [
+                { id:1, todo : "영화보기", done:false },
+                { id:2, todo : "주말 산책", done:true },
+                { id:3, todo : "ES6 학습", done:false },
+                { id:4, todo : "잠실 야구장", done:false }
+            ]
+        },
+        methods : {
+            checked : function(done) {
+                if(done) return { checked:true };
+                else return { checked:false };
+            },
+            addTodo : function(e) {
+                if (this.todo !== "") {
+                    this.todolist.push({ id: new Date().getTime(), todo : this.todo, done:false });
+                    this.todo = "";
+                }
+            },
+            deleteTodo : function(id) {
+                var index = this.todolist.findIndex(function(item) {
+                    return item.id === id;
+                })
+                this.todolist.splice(index,1);
+            },
+            doneToggle : function(id) {
+                var index = this.todolist.findIndex(function(item) {
+                    return item.id === id;
+                })
+                this.todolist[index].done = !this.todolist[index].done;
+            }
+        }
+    })
+</script>
 </body>
 </html>
