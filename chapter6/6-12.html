@@ -15,7 +15,6 @@
         #list td, #list th { border:1px solid black;  text-align:center; }
         #list > thead > tr { color:yellow; background-color: purple; }
     </style>
-
     <template id="listTemplate">
         <div>
             <table id="list">
@@ -25,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody id="contacts" >
-                <tr v-for="contact in contactlist">
+                <tr v-for="contact in contacts">
                     <td>{{contact.no}}</td>
                     <td>{{contact.name}}</td>
                     <td>{{contact.tel}}</td>
@@ -35,7 +34,6 @@
             </table>
         </div>
     </template>
-
     <script type="text/javascript">
         Vue.component('contactlist-component', {
             template : '#listTemplate',
@@ -47,36 +45,88 @@
     <!-- search-component start -->
     <template id="searchTemplate">
         <p>
-            이름 : <input type="text" v-model.trim="name" @keyup.enter="keyupEvent" :placeholder="placeholder" />
+            이름 : <input type="text" v-model.trim="name" :placeholder="placeholder"
+                        @keyup.enter="keyupEvent" />
         </p>
     </template>
-
     <script type="text/javascript">
         Vue.component('search-component', {
-            template: '#searchTemplate',
+            template : '#searchTemplate',
             props : [ 'placeholder' ],
-            data : function () {
-                return {name : ''}
+            data : function() {
+                return { name: ''};
             },
             methods : {
-                keyupEvent : function (e) {
+                keyupEvent : function(e) {
                     var val = e.target.value;
-
-                    if(val.length >= 2) this.$emit('search', val);
-                    else this.$emit('search')
+                    if (val.length >= 2) {
+                        this.$emit('search', val);
+                    } else {
+                        this.$emit('search', '');
+                    }
                 }
             }
         })
     </script>
     <!-- search-component end -->
 
+    <!-- search-contact-component start -->
+    <template id="searchcontactTemplate">
+        <div>
+            <search-component placeholder="두글자 이상 입력 후 엔터!" @search="searchEvent"></search-component>
+            <contactlist-component :contacts="contactlist"></contactlist-component>
+            <div v-show="isProcessing === true">조회중....</div>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+        Vue.component('search-contact-template', {
+            template : '#searchcontactTemplate',
+            data : function () {
+                return {
+                    contactlist : [],
+                    isProcessing : false
+                }
+            },
+            methods : {
+                searchEvent : function(name) {
+                    if(name == '') this.contactlist = [];
+                    else this.fetchContacts(name);
+                },
+                fetchContacts : _.debounce(function(name) {
+                    this.contactlist = [];
+                    this.isProcessing = true;
+                    var url = "http://sample.bmaster.kro.kr/contacts_long/search/"
+                        + name;
+                    var vm = this;
+                    fetch(url)
+                        .then(function(response) {
+                            return response.json()
+                        }).then(function(json) {
+                        vm.contactlist = json;
+                        vm.isProcessing = false;
+                    }).catch(function(ex) {
+                        console.log('parsing failed', ex);
+                        vm.contactlist = [];
+                        vm.isProcessing = false;
+                    })
+
+                }, 300)
+            }
+        })
+    </script>
+    <!-- search-contact-component end -->
 </head>
 <body>
-
+    <div id="app">
+        <search-contact-template></search-contact-template>
+    </div>
 </body>
 
 <script type="text/javascript">
-
+    var vm = new Vue({
+        el : '#app'
+    })
 </script>
 
 </html>
