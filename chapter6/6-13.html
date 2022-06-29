@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6-13</title>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<script type="text/javascript">
+  var eventBus = new Vue();
+</script>
+
+<!-- first child component -->
+<template id="child1Template">
+  <div>
+    <button v-on:click="clickEvent"> child 1 button </button>
+    <br><br>
+    <div>{{currentTime}}</div>
+  </div>
+</template>
+
+<script type="text/javascript">
+    Vue.component('child1-component', {
+        template : '#child1Template',
+        data : function () {
+            return {currentTime : ''}
+        },
+        methods : {
+            clickEvent : function (e) {
+                var d = new Date();
+                var t = d.toLocaleTimeString() + " " + d.getMilliseconds() + "ms";
+                eventBus.$emit('click1', t);
+                this.currentTime = t;
+            }
+        }
+    })
+</script>
+<!-- first child component end -->
+
+<!-- second child component start -->
+<template id="child2Template">
+    <ul>
+        <li v-for="t in timelist">{{t}}</li>
+    </ul>
+</template>
+<script type="text/javascript">
+    Vue.component('child2-component', {
+        template: '#child2Template',
+        data : function () {
+            return {
+                timelist : []
+            }
+        },
+        created : function () {
+            eventBus.$on('click1', this.child1Click);
+        },
+        methods : {
+            child1Click : function (time) {
+                this.timelist.push(time);
+            }
+        }
+    })
+</script>
+<!-- second child component end -->
+
+<body>
+    <div id="app">
+        <child1-component></child1-component>
+        <hr />
+        <child2-component></child2-component>
+    </div>
+</body>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el : "#app"
+    })
+</script>
+
+</html>
